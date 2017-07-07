@@ -27,6 +27,7 @@ namespace Pillar3D {
 			Entity currentEntity = Container;
 			while (currentEntity.Parent != null) {
 				currentEntity = currentEntity.Parent;
+				if (currentEntity.Components.Count == 0) continue;
 				if (currentEntity.Components[0] is Transform) {
 					parent = currentEntity.Components[0] as Transform;
 					parent.OnTransformChanged += OnTransformChanged;
