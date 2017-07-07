@@ -9,15 +9,15 @@ namespace Pillar3D {
 		public string name;
 
 		public static Level MainLevel;
-		public Level (string name) {
+		public Level(string name) {
 			if (MainLevel == null) MainLevel = this;
 			this.name = name;
 			Root = new Entity("Root");
 		}
 
-		public Level (XmlReader defaults) {
+		public Level(XmlReader defaults) {
 			if (MainLevel == null) MainLevel = this;
-			Level l = (Level) ( new XmlSerializer(typeof(Level)) ).Deserialize(defaults);
+			Level l = (Level)(new XmlSerializer(typeof(Level))).Deserialize(defaults);
 			Root = l.Root;
 			name = l.name;
 		}

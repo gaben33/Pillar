@@ -10,19 +10,19 @@ namespace Pillar3D {
 		public Entity Container;
 		public static bool AllowMultiple;//can the same component be added multiple times?
 
-		public Component (bool allowMultiple) {
+		public Component(bool allowMultiple) {
 		}
 
-		public virtual void OnComponentAdded () {
+		public virtual void OnComponentAdded() {
 
 		}
 
 		#region Utility Methods
-		public static Entity Instantiate (Entity original) {
+		public static Entity Instantiate(Entity original) {
 			return original.Clone();
 		}
 
-		
+
 		#endregion
 	}
 }

@@ -9,22 +9,22 @@ namespace Pillar3D {
 		private Dictionary<Keys, KeyState> States;
 
 		private static Input instance;
-		public Input () {
+		public Input() {
 			States = new Dictionary<Keys, KeyState>(100);
 			Rails.PersistantUpdate += Poll;
 			instance = this;
 		}
 
-		~Input () {
+		~Input() {
 			Rails.PersistantUpdate -= Poll;
 		}
 
 		//polls to update key dictionary
-		public static void Poll () {
+		public static void Poll() {
 
 		}
 
-		public static KeyState GetKey (Keys key) {
+		public static KeyState GetKey(Keys key) {
 			return instance.States[key];
 		}
 

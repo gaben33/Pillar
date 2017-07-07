@@ -6,42 +6,42 @@ using System.Threading.Tasks;
 
 namespace Pillar3D.Coroutines {
 	public class WaitForSecondsUnscaled : YieldInstruction {
-		public override Instruction GetInstruction () {
-			return ( ( Time.RealTime > WaitTime + StartTime ) ? Instruction.resume : Instruction.wait );
+		public override Instruction GetInstruction() {
+			return ((Time.RealTime > WaitTime + StartTime) ? Instruction.resume : Instruction.wait);
 		}
 
 		private float StartTime, WaitTime;
-		public WaitForSecondsUnscaled (float seconds) {
+		public WaitForSecondsUnscaled(float seconds) {
 			StartTime = Time.RealTime;
 			WaitTime = seconds;
 		}
 	}
 
 	public class WaitForSeconds : YieldInstruction {
-		public override Instruction GetInstruction () {
-			return ( ( Time.ScaledTime > WaitTime + StartTime ) ? Instruction.resume : Instruction.wait );
+		public override Instruction GetInstruction() {
+			return ((Time.ScaledTime > WaitTime + StartTime) ? Instruction.resume : Instruction.wait);
 		}
 
 		private float StartTime, WaitTime;
-		public WaitForSeconds (float seconds) {
+		public WaitForSeconds(float seconds) {
 			StartTime = Time.ScaledTime;
 			WaitTime = seconds;
 		}
 	}
 
 	public class WaitUntil : YieldInstruction {
-		public override Instruction GetInstruction () {
-			return ( fn() ? Instruction.resume : Instruction.wait );
+		public override Instruction GetInstruction() {
+			return (fn() ? Instruction.resume : Instruction.wait);
 		}
 
 		private Func<bool> fn;
-		public WaitUntil (Func<bool> condition) {
+		public WaitUntil(Func<bool> condition) {
 			fn = condition;
 		}
 	}
 
 	public class Frame : YieldInstruction {
-		public override Instruction GetInstruction () {
+		public override Instruction GetInstruction() {
 			if (!framed) {
 				framed = true;
 				return Instruction.wait;
@@ -49,7 +49,7 @@ namespace Pillar3D.Coroutines {
 		}
 
 		private bool framed;
-		public Frame () {
+		public Frame() {
 			framed = false;
 		}
 	}

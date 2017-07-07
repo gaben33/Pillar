@@ -14,20 +14,20 @@ namespace Pillar3D {
 
 		public Action OnTransformChanged;
 
-		public Transform () : base(false) {
-			
+		public Transform() : base(false) {
+
 		}
 
-		public override void OnComponentAdded () {
+		public override void OnComponentAdded() {
 			Reparent();
 		}
 
-		public void Reparent () {
+		public void Reparent() {
 			parent.OnTransformChanged -= OnTransformChanged;
 			Entity currentEntity = Container;
-			while(currentEntity.Parent != null) {
+			while (currentEntity.Parent != null) {
 				currentEntity = currentEntity.Parent;
-				if(currentEntity.Components[0] is Transform) {
+				if (currentEntity.Components[0] is Transform) {
 					parent = currentEntity.Components[0] as Transform;
 					parent.OnTransformChanged += OnTransformChanged;
 					break;

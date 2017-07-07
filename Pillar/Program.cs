@@ -8,14 +8,14 @@ namespace Pillar3D {
 	//manages iterative update delegates
 	class Rails {
 		public static bool Paused = false, Exit = false;
-		
+
 		public static Action Update, PersistantUpdate;
 
-		public Rails () {
+		public Rails() {
 			Paused = false;
 		}
 
-		static int Main (string[] args) {
+		static int Main(string[] args) {
 			Rails MainLoop = new Rails();
 			Time time = new Time();
 			Input inp = new Input();
@@ -26,7 +26,7 @@ namespace Pillar3D {
 			PersistantUpdate += runner.Frame;
 			Update = () => Console.Write("\rFrame Count: " + Time.FrameCount);
 			while (!Exit) {
-				if (!Paused) if (Update != null) Update();
+				if (!Paused) Update?.Invoke();
 				PersistantUpdate();
 			}
 			return 0;

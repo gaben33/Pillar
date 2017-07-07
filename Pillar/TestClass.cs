@@ -8,11 +8,11 @@ using System.IO;
 
 namespace Pillar3D {
 	class TestClass {
-		public TestClass () {
+		public TestClass() {
 			RoutineRunner.RunRoutine(ExampleRoutine());
 		}
 
-		public IEnumerator<YieldInstruction> ExampleRoutine () {
+		public IEnumerator<YieldInstruction> ExampleRoutine() {
 			float startTime = Time.RealTime;
 			Console.WriteLine("\nstarting, time is " + Time.RealTime);
 			//start
@@ -22,7 +22,7 @@ namespace Pillar3D {
 			Console.WriteLine("\rending, time is " + Time.RealTime);
 			float elapsedTime = Time.RealTime - startTime;
 			Console.WriteLine("elapsed time: " + elapsedTime);
-			float error = 100f * ( elapsedTime - runtime ) / runtime;
+			float error = 100f * (elapsedTime - runtime) / runtime;
 			Console.WriteLine(String.Format("Error: {0}%", error));
 			Console.WriteLine("Average Frame Rate: " + (int)((float)Time.FrameCount / Time.RealTime));
 			Rails.Paused = true;

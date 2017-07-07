@@ -12,21 +12,21 @@ namespace Pillar3D {
 
 		private Stopwatch watch;
 
-		public void Frame () {
-			DeltaTime = (float) watch.Elapsed.TotalSeconds - RealTime;
-			RealTime = (float) watch.Elapsed.TotalSeconds;
+		public void Frame() {
+			DeltaTime = (float)watch.Elapsed.TotalSeconds - RealTime;
+			RealTime = (float)watch.Elapsed.TotalSeconds;
 			ScaledTime += DeltaTime * TimeScale;
 			FrameCount++;
 		}
 
-		public Time () {
+		public Time() {
 			RealTime = ScaledTime = FrameCount = 0;
 			TimeScale = 1;
 			watch = new Stopwatch();
 			watch.Start();
 		}
 
-		~Time () {
+		~Time() {
 			watch.Stop();
 		}
 	}

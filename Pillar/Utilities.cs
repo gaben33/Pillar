@@ -18,8 +18,8 @@ namespace Pillar3D {
 			list.RemoveAt(index);
 			list.Insert(0, elem);
 		}
-		
-		public static float Lerp (float a, float b, float t) {
+
+		public static float Lerp(float a, float b, float t) {
 			return a + t * (b - a);
 		}
 	}
