@@ -46,21 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="LAlgTransform.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Internal\Component.cs" />
+    <Compile Include="Internal\Entity.cs" />
+    <Compile Include="Internal\Input.cs" />
+    <Compile Include="Internal\LAlgTransform.cs" />
+    <Compile Include="Internal\Level.cs" />
+    <Compile Include="Internal\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleComponent.cs" />
-    <Compile Include="TestClass.cs" />
-    <Compile Include="Time.cs" />
-    <Compile Include="Transform.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="Vector3.cs" />
-    <Compile Include="WaitForSeconds.cs" />
-    <Compile Include="YieldInstruction.cs" />
+    <Compile Include="Project Assets\SampleComponent.cs" />
+    <Compile Include="Project Assets\TestClass.cs" />
+    <Compile Include="Internal\Time.cs" />
+    <Compile Include="Internal\Transform.cs" />
+    <Compile Include="Internal\Utilities.cs" />
+    <Compile Include="Internal\Vector3.cs" />
+    <Compile Include="Internal\WaitForSeconds.cs" />
+    <Compile Include="Internal\YieldInstruction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

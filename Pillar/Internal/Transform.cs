@@ -17,9 +17,11 @@ namespace Pillar3D {
 			Reparent();
 		}
 
-		
+		protected void UpdateChildren () {
+			
+		}
 
-		public void Reparent() {
+		protected void Reparent() {
 			parent.OnTransformChanged -= OnTransformChanged;
 			Entity currentEntity = Container;
 			while (currentEntity.Parent != null) {

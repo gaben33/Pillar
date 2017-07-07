@@ -14,17 +14,17 @@ namespace Pillar3D {
 
 		public IEnumerator<YieldInstruction> ExampleRoutine() {
 			float startTime = Time.RealTime;
-			Console.WriteLine("\nstarting, time is " + Time.RealTime);
+			Console.WriteLine($"\nstarting, time is {Time.RealTime}");
 			//start
 			float runtime = 10f;
 			yield return new WaitForSeconds(runtime);
 			//end
-			Console.WriteLine("\rending, time is " + Time.RealTime);
+			Console.WriteLine($"\rending, time is {Time.RealTime}");
 			float elapsedTime = Time.RealTime - startTime;
-			Console.WriteLine("elapsed time: " + elapsedTime);
+			Console.WriteLine($"elapsed time: {elapsedTime}");
 			float error = 100f * (elapsedTime - runtime) / runtime;
-			Console.WriteLine(String.Format("Error: {0}%", error));
-			Console.WriteLine("Average Frame Rate: " + (int)((float)Time.FrameCount / Time.RealTime));
+			Console.WriteLine($"Error: {error}%");
+			Console.WriteLine($"Average Frame Rate: {(int)((float)Time.FrameCount / Time.RealTime)} FPS");
 			Rails.Paused = true;
 		}
 	}
