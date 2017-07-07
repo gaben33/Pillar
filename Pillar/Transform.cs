@@ -5,12 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Pillar3D {
-	public class Transform : Component {
-		public Vector3 Position, LocalPosition;
-		public Quaternion Rotation, LocalRotation;
-		public Vector3 Scale, LocalScale;
-
-		public Transform parent;
+	public partial class Transform : Component {
 
 		public Action OnTransformChanged;
 
@@ -21,6 +16,8 @@ namespace Pillar3D {
 		public override void OnComponentAdded() {
 			Reparent();
 		}
+
+		
 
 		public void Reparent() {
 			parent.OnTransformChanged -= OnTransformChanged;

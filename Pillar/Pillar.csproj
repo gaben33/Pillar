@@ -49,6 +49,7 @@
     <Compile Include="Component.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="LAlgTransform.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
