@@ -14,6 +14,11 @@ namespace Pillar3D {
 		private static List<IEnumerator<YieldInstruction>> routines;
 		public RoutineRunner() {
 			routines = new List<IEnumerator<YieldInstruction>>(50);
+			Rails.PersistantUpdate += Frame;
+		}
+
+		~RoutineRunner () {
+			Rails.PersistantUpdate -= Frame;
 		}
 
 		//advance one frame

@@ -19,6 +19,9 @@ namespace Pillar3D {
 		public Vector3(Vector3 original) : base(original) {
 			z = original.z;
 		}
+		public Vector3(Vector2 original) : base(original) {
+			z = 0;
+		}
 		#endregion
 
 		#region math functions
@@ -48,7 +51,7 @@ namespace Pillar3D {
 
 		//returns the angle in radians
 		public static float Angle(Vector3 lhs, Vector3 rhs) {
-			return (float)Math.Acos(Vector3.Dot(lhs.Normalized(), rhs.Normalized()));
+			return (float)Math.Acos(Dot(lhs.Normalized(), rhs.Normalized()));
 		}
 
 		public static Vector3 Cross(Vector3 lhs, Vector3 rhs) {
@@ -75,31 +78,57 @@ namespace Pillar3D {
 		public static Vector3 operator *(float lhs, Vector3 rhs) {
 			return rhs * lhs;
 		}
-
 		public static Vector3 operator /(Vector3 lhs, float rhs) {
 			return new Vector3(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
 		}
-
 		public static Vector3 operator +(Vector3 lhs, Vector3 rhs) {
 			return new Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 		}
-
 		public static Vector3 operator -(Vector3 lhs, Vector3 rhs) {
 			return new Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 		}
-
 		public static Vector3 operator *(Quaternion q, Vector3 v) {
 			Vector3 u = new Vector3(q.x, q.y, q.z);
 			float s = q.w;
 			return (2f * Dot(u, v) * u) + ((s * s - Dot(u, u)) * v) + (2f * s * Cross(u, v));
 		}
-
 		public static Vector3 operator *(Vector3 lhs, Vector3 rhs) {
 			return new Vector3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z);
 		}
 		public static Vector3 operator /(Vector3 lhs, Vector3 rhs) {
 			return new Vector3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
 		}
+
+		new public float this[int i] {
+			get { return (new float[] {x, y, z})[i]; }
+			set {
+				switch(i) {
+					case (0): x = value;
+						break;
+					case (1): y = value;
+						break;
+					default: z = value;
+						break;
+				}
+			}
+		}
+		#endregion
+
+		#region misc functions
+		public override string ToString() {
+			return $"<{x}, {y}, {z}>";
+		}
+		#endregion
+
+		#region defaults
+		public static Vector3 Forward { get { return new Vector3( 0, 0, 1 ); } }
+		public static Vector3 Up      { get { return new Vector3( 0, 1, 0 ); } }
+		public static Vector3 Right   { get { return new Vector3( 1, 0, 0 ); } }
+		public static Vector3 Back    { get { return new Vector3( 0, 0,-1 ); } }
+		public static Vector3 Down    { get { return new Vector3( 0,-1, 0 ); } }
+		public static Vector3 Left    { get { return new Vector3(-1, 0, 0 ); } }
+		public static Vector3 One { get { return new Vector3(1, 1, 1); } }
+		public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
 		#endregion
 	}
 
@@ -156,25 +185,41 @@ namespace Pillar3D {
 		public static Vector2 operator *(Vector2 lhs, float rhs) {
 			return new Vector2(lhs.x * rhs, lhs.y * rhs);
 		}
-
 		public static Vector2 operator /(Vector2 lhs, float rhs) {
 			return new Vector2(lhs.x / rhs, lhs.y / rhs);
 		}
-
 		public static Vector2 operator +(Vector2 lhs, Vector2 rhs) {
 			return new Vector2(lhs.x + rhs.x, lhs.y + rhs.y);
 		}
-
 		public static Vector2 operator -(Vector2 lhs, Vector2 rhs) {
 			return new Vector2(lhs.x - rhs.x, lhs.y - rhs.y);
 		}
-
 		public static Vector2 operator *(Vector2 lhs, Vector2 rhs) {
 			return new Vector2(lhs.x * rhs.x, lhs.y * rhs.y);
 		}
 		public static Vector2 operator /(Vector2 lhs, Vector2 rhs) {
 			return new Vector2(lhs.x / rhs.x, lhs.y / rhs.y);
 		}
+
+		public float this[int i] {
+			get { return i == 0 ? x : y; }
+			set { if (i == 0) x = value; else y = value; }
+		}
+		#endregion
+
+		#region misc functions
+		public override string ToString () {
+			return $"<{x}, {y}>";
+		}
+		#endregion
+
+		#region defaults
+		public static Vector2 Up { get { return new Vector2(0, 1); } }
+		public static Vector2 Right { get { return new Vector2(1, 0); } }
+		public static Vector2 Down { get { return new Vector2(0, -1); } }
+		public static Vector2 Left { get { return new Vector2(-1, 0); } }
+		public static Vector2 Zero { get { return new Vector2(0, 0); } }
+		public static Vector2 One { get { return new Vector2(1, 1); } }
 		#endregion
 	}
 
@@ -254,7 +299,7 @@ namespace Pillar3D {
 		}
 		//takes Angles.x + i*Angles.y
 		public Quaternion2D(Vector2 Angles) {
-
+			
 		}
 	}
 }

@@ -8,9 +8,9 @@ namespace Pillar3D {
 		public Entity Root;
 		public string name;
 
-		public static Level MainLevel;
+		public static Level MainLevel, CurrentLevel;
 		public Level(string name) {
-			if (MainLevel == null) MainLevel = this;
+			if (MainLevel == null) CurrentLevel = MainLevel = this;
 			this.name = name;
 			Root = new Entity("Root");
 		}
