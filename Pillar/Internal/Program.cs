@@ -28,8 +28,12 @@ namespace Pillar3D {
 			RoutineRunner runner = new RoutineRunner();
 			TestClass tc = new TestClass();
 			Level main = new Level("main");
+
 			Input.CreateInputVector2D("Direction", new Input.InputVector2D(new Input.InputAxis(Key.Left, Key.Right), new Input.InputAxis(Key.Down, Key.Up)));
-			Update = () => Console.Write("\r" + new Vector3(Input.GetInputVector2D("Direction")) + $", {1f / Time.SmoothDeltaTime}");
+			Matrix m1 = new Matrix(new float[][] { new float[] { 1, 5, 3 }, new float[] { 4, 5, 6 }, new float[] { 7, 8, 9 } });
+			Matrix m2 = new Matrix(new float[][] { new float[] { 1 }, new float[] { 2 }, new float[] { 3 } });
+			Update = () => Console.WriteLine((m1.Determinant()).ToString());
+			//Update = () => Console.Write($"\r{Input.GetKey(Key.LeftShift)}, {1f / Time.SmoothDeltaTime}");
 			while (!Exit) {
 				if (!Paused) Update?.Invoke();
 				PersistantUpdate();

@@ -6,23 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+
 namespace Pillar3D {
 	public class Input {
 		#region variables
-		public Key CurrentKey { get; private set;}
-		public Key[] PressedKeys { get; private set; }
-		public bool AnyKey { get { return PressedKeys.Any(); } }
+		public static Key CurrentKey { get; private set;}
+		//public static Key[] PressedKeys { get; private set; }
+		//public bool AnyKey { get { return PressedKeys.Any(); } }
 		private static Dictionary<string, InputAxis> Axes;
 		private static Dictionary<string, InputVector2D> VectorInputs2D;
 		private static Dictionary<string, InputVector3D> VectorInputs3D;
 		private static Input instance;
-		private static readonly byte[] DistinctVirtualKeys = Enumerable
+		/*private static readonly byte[] DistinctVirtualKeys = Enumerable
 			.Range(0, 256)
 			.Select(KeyInterop.KeyFromVirtualKey)
 			.Where(item => item != Key.None)
 			.Distinct()
 			.Select(item => (byte)KeyInterop.VirtualKeyFromKey(item))
-			.ToArray();
+			.ToArray();*/
 		#endregion
 
 		#region constructors
@@ -32,6 +33,7 @@ namespace Pillar3D {
 			Axes = new Dictionary<string, InputAxis>();
 			VectorInputs2D = new Dictionary<string, InputVector2D>();
 			VectorInputs3D = new Dictionary<string, InputVector3D>();
+			Poll();
 		}
 		~Input() {
 			Rails.PersistantUpdate -= Poll;
@@ -70,22 +72,29 @@ namespace Pillar3D {
 			}
 		}
 		public static void Poll () {
-			instance.PressedKeys = CurrentKeysDown().ToArray();
+			//PressedKeys = CurrentKeysDown().ToArray();
 		}
-		private static IEnumerable<Key> CurrentKeysDown () {
-			var keyboardState = new byte[256];
-			GetKeyboardState(keyboardState);
-
-			var downKeys = new List<Key>();
-			for (var index = 0; index < DistinctVirtualKeys.Length; index++) {
-				var virtualKey = DistinctVirtualKeys[index];
-				if ((keyboardState[virtualKey] & 0x80) != 0) {
-					downKeys.Add(KeyInterop.KeyFromVirtualKey(virtualKey));
-				}
-			}
-
-			return downKeys;
-		}
+		//private static IEnumerable<Key> CurrentKeysDown () {
+		//	var keys = new byte[256];
+		//	GetKeyboardState(keys);
+		//	var downKeys = new List<Key>();
+		//	for (var index = 0; index < 256; index++) {
+		//		byte key = keys[index];
+		//		if ((key & 0x80) != 0) {
+		//			downKeys.Add((Key)key);
+		//		}
+		//	}
+		//	return downKeys;
+		//}
+		//private static byte GetVirtualKeyCode(Key key) {
+		//	int value = (int)key;
+		//	return (byte)(value & 0xFF);
+		//}
+		//private static string ToArrayString (byte[] array) {
+		//	string s = array[0].ToString();
+		//	for (int i = 1; i < array.Length; i++) s += $"{array[i].ToString()}, ";
+		//	return s;
+		//}
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		private static extern bool GetKeyboardState(byte[] lpKeyState);
@@ -98,12 +107,12 @@ namespace Pillar3D {
 		public static bool GetKey(Key key) {
 			return Keyboard.IsKeyDown(key);
 		}
-		public static bool GetKeyDown(Key key) {
-			return Keyboard.IsKeyDown(key) && Keyboard.IsKeyToggled(key);
-		}
-		public static bool GetKeyUp(Key key) {
-			return Keyboard.IsKeyUp(key) && Keyboard.IsKeyToggled(key);
-		}
+		//public static bool GetKeyDown(Key key) {
+		//	return Keyboard.IsKeyDown(key) && Keyboard.IsKeyToggled(key);
+		//}
+		//public static bool GetKeyUp(Key key) {
+		//	return Keyboard.IsKeyUp(key) && Keyboard.IsKeyToggled(key);
+		//}
 
 		public static void CreateAxis(string name, InputAxis axis) {
 			if (Axes.ContainsKey(name)) Axes[name] = axis;

@@ -28,7 +28,7 @@ namespace Pillar3D {
 				return tag;
 			}
 			set {
-				if (tag != "untagged") if (TaggedObjects.ContainsKey(tag)) TaggedObjects[tag].Remove(this);
+				if(tag != null) if (tag != "untagged") if (TaggedObjects.ContainsKey(tag)) TaggedObjects[tag].Remove(this);
 				if (value != "untagged") {
 					if (!TaggedObjects.ContainsKey(value)) TaggedObjects.Add(value, new List<Entity>() { this });
 					else TaggedObjects[value].Add(this);

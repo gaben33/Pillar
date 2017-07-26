@@ -100,14 +100,17 @@ namespace Pillar3D {
 		}
 
 		new public float this[int i] {
-			get { return (new float[] {x, y, z})[i]; }
+			get { return (new float[] { x, y, z })[i]; }
 			set {
-				switch(i) {
-					case (0): x = value;
+				switch (i) {
+					case (0):
+						x = value;
 						break;
-					case (1): y = value;
+					case (1):
+						y = value;
 						break;
-					default: z = value;
+					default:
+						z = value;
 						break;
 				}
 			}
@@ -121,12 +124,12 @@ namespace Pillar3D {
 		#endregion
 
 		#region defaults
-		public static Vector3 Forward { get { return new Vector3( 0, 0, 1 ); } }
-		public static Vector3 Up      { get { return new Vector3( 0, 1, 0 ); } }
-		public static Vector3 Right   { get { return new Vector3( 1, 0, 0 ); } }
-		public static Vector3 Back    { get { return new Vector3( 0, 0,-1 ); } }
-		public static Vector3 Down    { get { return new Vector3( 0,-1, 0 ); } }
-		public static Vector3 Left    { get { return new Vector3(-1, 0, 0 ); } }
+		public static Vector3 Forward { get { return new Vector3(0, 0, 1); } }
+		public static Vector3 Up { get { return new Vector3(0, 1, 0); } }
+		public static Vector3 Right { get { return new Vector3(1, 0, 0); } }
+		public static Vector3 Back { get { return new Vector3(0, 0, -1); } }
+		public static Vector3 Down { get { return new Vector3(0, -1, 0); } }
+		public static Vector3 Left { get { return new Vector3(-1, 0, 0); } }
 		public static Vector3 One { get { return new Vector3(1, 1, 1); } }
 		public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
 		#endregion
@@ -208,7 +211,7 @@ namespace Pillar3D {
 		#endregion
 
 		#region misc functions
-		public override string ToString () {
+		public override string ToString() {
 			return $"<{x}, {y}>";
 		}
 		#endregion
@@ -223,83 +226,43 @@ namespace Pillar3D {
 		#endregion
 	}
 
-	public class Quaternion {
-		public float x, y, z, w;
-		public Quaternion() {
-			x = y = z = w = 0;
-		}
-		public Quaternion(float x, float y, float z, float w) {
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			this.w = w;
-		}
+	public class VectorN {
+		#region variables
+		private float[] values;
+		public int Dimension { get { return values.Length; } }
+		#endregion
 
-		/// <summary>
-		/// Angles is xyz on a unit sphere
-		/// </summary>
-		/// <param name="Angles"></param>
-		public Quaternion(Vector3 Angles) {
-			float t0 = (float)Math.Cos(Angles.x * 0.5f);
-			float t1 = (float)Math.Sin(Angles.x * 0.5f);
-			float t2 = (float)Math.Cos(Angles.y * 0.5f);
-			float t3 = (float)Math.Sin(Angles.y * 0.5f);
-			float t4 = (float)Math.Cos(Angles.z * 0.5f);
-			float t5 = (float)Math.Sin(Angles.z * 0.5f);
+		#region constructors
+		public VectorN(int dimension) {
+			values = new float[dimension];
+		}
+		#endregion
 
-			w = t0 * t2 * t4 + t1 * t3 * t5;
-			x = t0 * t3 * t4 - t1 * t2 * t5;
-			y = t0 * t2 * t5 + t1 * t3 * t4;
-			z = t1 * t2 * t4 - t0 * t3 * t5;
+		#region math operators
+		public float this[int i] {
+			get { return values[i]; }
+			set { values[i] = value; }
 		}
 
-		/// <summary>
-		/// Converts to xyz on a unit sphere
-		/// </summary>
-		/// <returns></returns>
-		public Vector3 ToAngles() {
-			Vector3 angles = new Vector3();
-
-			float ySqr = y * y;
-
-			float t0 = 2f * (w * x + y * z);
-			float t1 = 1f - 2f * (x * x + ySqr);
-			angles.x = (float)Math.Atan2(t0, t1);
-
-			float t2 = 2f * (w * y - z * x);
-			t2 = t2 > 1 ? 1 : t2;
-			t2 = t2 < -1 ? -1 : t2;
-			angles.y = (float)Math.Asin(t2);
-
-			float t3 = 2f * (w * z + x * y);
-			float t4 = 1 - 2f * (ySqr + z * z);
-			angles.z = (float)Math.Atan2(t3, t4);
-
-			return angles;
+		public static float Dot(VectorN lhs, VectorN rhs) {
+			if (lhs.values.Length != rhs.values.Length) throw new ArgumentException();
+			float sum = 0;
+			for(int i = 0; i < lhs.values.Length; i++) {
+				sum += lhs[i] * rhs[i];
+			}
+			return sum;
 		}
+		#endregion
 
-		public Quaternion LookRotation(Vector3 Rotation, Vector3 Axis) {
-			throw new NotImplementedException();
+		#region functions
+		public override string ToString() {
+			string s = "<";
+			for(int i = 0; i < Dimension; i++) {
+				s += this[i] + (i == Dimension - 1 ? "" : " ");
+			}
+			s += ">";
+			return s;
 		}
-
-		public static Quaternion operator *(Quaternion a, Quaternion b) {
-			return new Quaternion() {
-				x = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
-				y = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
-				z = a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
-				w = a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w
-			};
-		}
-	}
-
-	public class Quaternion2D {
-		public float x, y;
-		public Quaternion2D() {
-			x = y = 0;
-		}
-		//takes Angles.x + i*Angles.y
-		public Quaternion2D(Vector2 Angles) {
-			
-		}
+		#endregion
 	}
 }
