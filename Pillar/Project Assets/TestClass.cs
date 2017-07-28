@@ -17,7 +17,8 @@ class TestClass {
 		Console.WriteLine($"\nstarting, time is {Time.RealTime}");
 		//start
 		Rails.Update += PrintKeyState;
-		yield return new WaitUntil(() => Input.GetKey(System.Windows.Input.Key.Escape));
+		yield return new WaitForSecondsFunctional(10f, PrintWaitProgress);
+		//yield return new WaitUntil(() => Input.GetKey(System.Windows.Input.Key.Escape));
 		float elapsed = Time.RealTime - startTime;
 		Console.WriteLine($"\rYou waited for {elapsed} seconds");
 		Rails.Update -= PrintKeyState;
@@ -33,6 +34,10 @@ class TestClass {
 		Console.WriteLine($"Average Frame Rate: {(int)(Time.FrameCount / Time.RealTime)} FPS");
 		*/
 		Rails.Paused = true;
+	}
+
+	private void PrintWaitProgress (float t) {
+		Console.WriteLine($"\r{t}");
 	}
 
 	private void PrintKeyState () {

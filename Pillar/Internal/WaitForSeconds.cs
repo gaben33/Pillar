@@ -50,4 +50,34 @@ namespace Pillar3D.Coroutines {
 			fn = condition;
 		}
 	}
+
+	public class WaitForSecondsInterruptable : YieldInstruction {
+		public override Instruction GetInstruction() {
+			return (Time.RealTime > EndTime || Predicate()) ? Instruction.resume : Instruction.wait;
+		}
+
+		private float EndTime;
+		private Func<bool> Predicate;
+		public WaitForSecondsInterruptable(float time, Func<bool> predicate) {
+			EndTime = Time.RealTime + time;
+			Predicate = predicate;
+		}
+	}
+
+	public class WaitForSecondsFunctional : YieldInstruction {
+
+		private float EndTime, StartTime, Duration;
+		private Action<float> Actor;
+		public WaitForSecondsFunctional(float time, Action<float> actor) {
+			StartTime = Time.RealTime;
+			EndTime = StartTime + time;
+			Duration = time;
+			Actor = actor;
+		}
+
+		public override Instruction GetInstruction() {
+			Actor((Time.RealTime - StartTime) / Duration);
+			return (Time.RealTime > EndTime) ? Instruction.resume : Instruction.wait;
+		}
+	}
 }
