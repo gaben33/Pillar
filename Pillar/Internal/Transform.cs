@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Pillar3D {
 	public partial class Transform : Component {
-
+		//updates cached values
 		public Action OnTransformChanged;
 
-		public Transform() : base(false) {
+		private bool dirty;
 
+		public Transform() : base(false) {
+			dirty = true;
+			Container.OnParentChanged += Reparent;
 		}
 
 		public override void OnComponentAdded() {
@@ -22,14 +25,13 @@ namespace Pillar3D {
 		}
 
 		protected void Reparent() {
-			parent.OnTransformChanged -= OnTransformChanged;
+			dirty = true;
 			Entity currentEntity = Container;
 			while (currentEntity.Parent != null) {
 				currentEntity = currentEntity.Parent;
 				if (currentEntity.Components.Count == 0) continue;
 				if (currentEntity.Components[0] is Transform) {
 					parent = currentEntity.Components[0] as Transform;
-					parent.OnTransformChanged += OnTransformChanged;
 					break;
 				}
 			}

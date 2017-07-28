@@ -32,7 +32,8 @@ namespace Pillar3D {
 			Input.CreateInputVector2D("Direction", new Input.InputVector2D(new Input.InputAxis(Key.Left, Key.Right), new Input.InputAxis(Key.Down, Key.Up)));
 			Matrix m1 = new Matrix(new float[][] { new float[] { 1, 5, 3 }, new float[] { 4, 5, 6 }, new float[] { 7, 8, 9 } });
 			Matrix m2 = new Matrix(new float[][] { new float[] { 1 }, new float[] { 2 }, new float[] { 3 } });
-			Update = () => Console.WriteLine((m1.Determinant()).ToString());
+			Quaternion q1 = new Quaternion(0, 1, 2, 3);
+			Update = () => Console.WriteLine($"\r{((Matrix)q1).ToString()}");//, {1f / Time.SmoothDeltaTime}");
 			//Update = () => Console.Write($"\r{Input.GetKey(Key.LeftShift)}, {1f / Time.SmoothDeltaTime}");
 			while (!Exit) {
 				if (!Paused) Update?.Invoke();

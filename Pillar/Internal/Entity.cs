@@ -21,8 +21,19 @@ namespace Pillar3D {
 				return true;
 			}
 		}
-		public string Name;
+		public string Name {
+			get {
+				return name;
+			}
+			set {
+				if (NamedObjects.ContainsKey(name)) NamedObjects[name].Remove(this);
+				if(!NamedObjects.ContainsKey(value)) NamedObjects.Add(value, new List<Entity>(new Entity[] { this }));
+				name = value;
+			}
+		}
+		private string name;
 		public Level ContainerLevel { get; private set; }
+		public Action OnParentChanged;
 		public string Tag {
 			get {
 				return tag;
@@ -39,11 +50,13 @@ namespace Pillar3D {
 		private string tag;
 
 		private static Dictionary<string, List<Entity>> TaggedObjects;
+		private static Dictionary<string, List<Entity>> NamedObjects;
 		#endregion
 
 		#region constructors
 		public Entity() {
 			if (TaggedObjects == null) TaggedObjects = new Dictionary<string, List<Entity>>();
+			if (NamedObjects == null) NamedObjects = new Dictionary<string, List<Entity>>(201);
 			Components = new List<Component>(1);
 			Children = new List<Entity>();
 			Parent = Level.MainLevel.Root;
@@ -55,6 +68,10 @@ namespace Pillar3D {
 
 		public Entity(string name) : this() {
 			Name = name;
+		}
+
+		~Entity() {
+			NamedObjects[name].Remove(this);
 		}
 		#endregion
 
@@ -82,11 +99,22 @@ namespace Pillar3D {
 			return comp;
 		}
 
+		public void RemoveComponent<C>() {
+			for(int i = 0; i < Components.Count; i++) {
+				if(Components[i] is C) {
+					Components[i].OnComponentRemoved();
+					Components.RemoveAt(i);
+					break;
+				}
+			}
+		}
+
 		public void SetParent(Entity parent) {
 			Parent.Children.Remove(this);
 			parent.Children.Add(this);
 			Parent = parent;
 			ContainerLevel = parent.ContainerLevel;
+			OnParentChanged();
 		}
 
 		//public void Simulate () {

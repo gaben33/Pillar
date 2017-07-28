@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Pillar3D {
 	public class Matrix {
+		#region variables
 		private float[][] values;
 
 		public int Width { get { return values[0].Length; } }
 		public int Height { get { return values.Length; } }
 		public bool Square {  get { return Width == Height; } }
+		#endregion
 
 		#region constructors
 		public Matrix(int rows, int columns) {
@@ -56,6 +58,36 @@ namespace Pillar3D {
 			return sum;
 		}
 
+		public static Matrix operator +(Matrix lhs, Matrix rhs) {
+			if (lhs.Width != rhs.Width || lhs.Height != rhs.Height) throw new ArgumentException("Matrix dimensions must match!");
+			Matrix result = new Matrix(lhs.Width, lhs.Height);
+			for(int i = 0; i < result.Width; i++) {
+				for (int j = 0; j < result.Height; j++) result[i, j] = lhs[i, j] + rhs[i, j];
+			}
+			return result;
+		}
+		public static Matrix operator -(Matrix lhs, Matrix rhs) {
+			if (lhs.Width != rhs.Width || lhs.Height != rhs.Height) throw new ArgumentException("Matrix dimensions must match!");
+			Matrix result = new Matrix(lhs.Width, lhs.Height);
+			for (int i = 0; i < result.Width; i++) {
+				for (int j = 0; j < result.Height; j++) result[i, j] = lhs[i, j] - rhs[i, j];
+			}
+			return result;
+		}
+		public static Matrix operator *(Matrix lhs, float scalar) {
+			Matrix result = new Matrix(lhs.Width, lhs.Height);
+			for (int i = 0; i < result.Width; i++) {
+				for (int j = 0; j < result.Height; j++) result[i, j] = lhs[i, j] * scalar;
+			}
+			return result;
+		}
+		public static Matrix operator *(float scalar,  Matrix rhs) {
+			Matrix result = new Matrix(rhs.Width, rhs.Height);
+			for (int i = 0; i < result.Width; i++) {
+				for (int j = 0; j < result.Height; j++) result[i, j] = rhs[i, j] * scalar;
+			}
+			return result;
+		}
 		public static Matrix operator *(Matrix lhs, Matrix rhs) {
 			int r1 = lhs.Height, r2 = rhs.Height, c1 = lhs.Width, c2 = rhs.Width;//rows and columns of lhs (1) and rhs (2)
 			if (c1 != r2) throw new ArgumentException("matrix dimensions are not multipliable");
@@ -67,6 +99,7 @@ namespace Pillar3D {
 			}
 			return result;
 		}
+
 		//returns the dot product of the rows that corroborate to form (x,y) in the resultant matrix
 		private static float GetResult(Matrix lhs, Matrix rhs, int x, int y) {
 			if (lhs.Width != rhs.Height) throw new ArgumentException("vector dimensions don't match!");
@@ -118,6 +151,23 @@ namespace Pillar3D {
 				s += "|\n";
 			}
 			return s;
+		}
+
+		public static Matrix Identity (Matrix A) {
+			int size = A.Height;
+			Matrix result = new Matrix(A.Height, A.Height);
+			for (int i = 0; i < result.Width; i++) {
+				for(int j = 0; j < result.Height; j++) result[i, j] = (i == j) ? 1 : 0;
+			}
+			return result;
+		}
+		public static Matrix Zero(Matrix A) {
+			int size = A.Height;
+			Matrix result = new Matrix(A.Height, A.Height);
+			for (int i = 0; i < result.Width; i++) {
+				for (int j = 0; j < result.Height; j++) result[i, j] = 0;
+			}
+			return result;
 		}
 		#endregion
 	}

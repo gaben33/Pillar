@@ -23,4 +23,33 @@ namespace Pillar3D {
 			return a + t * (b - a);
 		}
 	}
+
+	public class SmartCache<T> {
+		private Func<T> Calculator;
+		private bool dirty;
+		private T val;
+		public T Value {
+			get {
+				if (dirty) {
+					dirty = false;
+					val = Calculator();
+				}
+				return val;
+			}
+			set {
+				dirty = false;
+				val = value;
+			}
+		}
+
+		public SmartCache(Func<T> Calculator, T initialValue) {
+			dirty = false;
+			val = initialValue;
+			this.Calculator = Calculator;
+		}
+		
+		public void Dirty () {
+			dirty = true;
+		}
+	}
 }

@@ -3,6 +3,7 @@
 
 namespace Pillar3D {
 	public class Quaternion {
+		#region variables, constructors
 		public float x, y, z, w;
 		public Quaternion() {
 			x = y = z = w = 0;
@@ -13,7 +14,9 @@ namespace Pillar3D {
 			this.z = z;
 			this.w = w;
 		}
+		#endregion
 
+		#region vector-quaternion conversions
 		/// <summary>
 		/// Angles is xyz on a unit sphere
 		/// </summary>
@@ -114,7 +117,9 @@ namespace Pillar3D {
 			quaternion.w = (m01 - m10) * num2;
 			return quaternion;
 		}
+		#endregion
 
+		#region operators
 		public static Quaternion operator *(Quaternion a, Quaternion b) {
 			return new Quaternion() {
 				x = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
@@ -135,5 +140,18 @@ namespace Pillar3D {
 			+ ((rhs.w * rhs.w - Vector3.Dot(u, u)) * lhs)
 			+ (2 * rhs.w * Vector3.Cross(u, lhs));
 		}
+		#endregion
+
+		#region functions
+		public static explicit operator Matrix (Quaternion q) {
+			return new Matrix(new float[][] { 
+				new float[] { q.x, -q.y, -q.z, -q.w },
+				new float[] { q.y, q.x, -q.w, q.z },
+				new float[] { q.z, q.w, q.x, -q.y },
+				new float[] { q.w, -q.z, q.y, q.x }
+			});
+
+		}
+		#endregion
 	}
 }
