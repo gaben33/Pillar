@@ -40,19 +40,14 @@ namespace Pillar3D.Coroutines {
 		}
 	}
 
-	public class Frame : YieldInstruction {
+	public class WaitWhile : YieldInstruction {
 		public override Instruction GetInstruction() {
-			if (!framed) {
-				framed = true;
-				return Instruction.wait;
-			} else return Instruction.resume;
+			return (fn() ? Instruction.wait : Instruction.resume);
 		}
 
-		private bool framed;
-		public Frame() {
-			framed = false;
+		private Func<bool> fn;
+		public WaitWhile(Func<bool> condition) {
+			fn = condition;
 		}
 	}
-
-
 }

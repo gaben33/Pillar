@@ -16,6 +16,12 @@ class TestClass {
 		float startTime = Time.RealTime;
 		Console.WriteLine($"\nstarting, time is {Time.RealTime}");
 		//start
+		Rails.Update += PrintKeyState;
+		yield return new WaitUntil(() => Input.GetKey(System.Windows.Input.Key.Escape));
+		float elapsed = Time.RealTime - startTime;
+		Console.WriteLine($"\rYou waited for {elapsed} seconds");
+		Rails.Update -= PrintKeyState;
+		/*
 		float runtime = 10f;
 		yield return new WaitForSeconds(runtime);
 		//end
@@ -24,7 +30,15 @@ class TestClass {
 		Console.WriteLine($"elapsed time: {elapsedTime}");
 		float error = 100f * (elapsedTime - runtime) / runtime;
 		Console.WriteLine($"Error: {error}%");
-		Console.WriteLine($"Average Frame Rate: {(int)((float)Time.FrameCount / Time.RealTime)} FPS");
+		Console.WriteLine($"Average Frame Rate: {(int)(Time.FrameCount / Time.RealTime)} FPS");
+		*/
 		Rails.Paused = true;
+	}
+
+	private void PrintKeyState () {
+		string s = "";
+		if (Input.GetKeyDown(System.Windows.Input.Key.Enter)) s = $"Enter pressed down at {(int)Time.RealTime}s";
+		else if (Input.GetKeyUp(System.Windows.Input.Key.Enter)) s = $"Enter released at {(int)Time.RealTime}s";
+		if (s != "") Console.WriteLine($"\n{s}");
 	}
 }

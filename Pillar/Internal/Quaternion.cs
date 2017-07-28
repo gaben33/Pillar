@@ -14,6 +14,11 @@ namespace Pillar3D {
 			this.z = z;
 			this.w = w;
 		}
+		public static Quaternion Identity {
+			get {
+				return new Quaternion(0, 0, 0, 0);
+			}
+		}
 		#endregion
 
 		#region vector-quaternion conversions

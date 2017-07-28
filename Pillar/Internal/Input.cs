@@ -16,6 +16,7 @@ namespace Pillar3D {
 		private static Dictionary<string, InputAxis> Axes;
 		private static Dictionary<string, InputVector2D> VectorInputs2D;
 		private static Dictionary<string, InputVector3D> VectorInputs3D;
+		private static Dictionary<Key, bool> CachedKeyValues;
 		private static Input instance;
 		/*private static readonly byte[] DistinctVirtualKeys = Enumerable
 			.Range(0, 256)
@@ -33,6 +34,7 @@ namespace Pillar3D {
 			Axes = new Dictionary<string, InputAxis>();
 			VectorInputs2D = new Dictionary<string, InputVector2D>();
 			VectorInputs3D = new Dictionary<string, InputVector3D>();
+			CachedKeyValues = new Dictionary<Key, bool>(123);
 			Poll();
 		}
 		~Input() {
@@ -102,17 +104,26 @@ namespace Pillar3D {
 
 		#region external
 		public static KeyStates GetKeyState(Key key) {
+			if (CachedKeyValues.ContainsKey(key)) CachedKeyValues[key] = Keyboard.IsKeyDown(key);
+			else CachedKeyValues.Add(key, Keyboard.IsKeyDown(key));
 			return Keyboard.GetKeyStates(key);
 		}
 		public static bool GetKey(Key key) {
+			GetKeyState(key);
 			return Keyboard.IsKeyDown(key);
 		}
-		//public static bool GetKeyDown(Key key) {
-		//	return Keyboard.IsKeyDown(key) && Keyboard.IsKeyToggled(key);
-		//}
-		//public static bool GetKeyUp(Key key) {
-		//	return Keyboard.IsKeyUp(key) && Keyboard.IsKeyToggled(key);
-		//}
+		public static bool GetKeyDown(Key key) {
+			if (!CachedKeyValues.ContainsKey(key)) CachedKeyValues.Add(key, false);
+			bool IsDown = Keyboard.IsKeyDown(key) && CachedKeyValues[key] == false;
+			if (IsDown) CachedKeyValues[key] = true;
+			return IsDown;
+		}
+		public static bool GetKeyUp(Key key) {
+			if (!CachedKeyValues.ContainsKey(key)) CachedKeyValues.Add(key, false);
+			bool IsUp = !Keyboard.IsKeyDown(key) && CachedKeyValues[key] == true;
+			if (IsUp) CachedKeyValues[key] = false;
+			return IsUp;
+		}
 
 		public static void CreateAxis(string name, InputAxis axis) {
 			if (Axes.ContainsKey(name)) Axes[name] = axis;
