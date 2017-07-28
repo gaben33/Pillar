@@ -21,17 +21,8 @@ namespace Pillar3D {
 				return true;
 			}
 		}
-		public string Name {
-			get {
-				return name;
-			}
-			set {
-				if (NamedObjects.ContainsKey(name)) NamedObjects[name].Remove(this);
-				if(!NamedObjects.ContainsKey(value)) NamedObjects.Add(value, new List<Entity>(new Entity[] { this }));
-				name = value;
-			}
-		}
-		private string name;
+		public string Name;
+		public int ID { get; private set; }
 		public Level ContainerLevel { get; private set; }
 		public Action OnParentChanged;
 		public string Tag {
@@ -50,13 +41,13 @@ namespace Pillar3D {
 		private string tag;
 
 		private static Dictionary<string, List<Entity>> TaggedObjects;
-		private static Dictionary<string, List<Entity>> NamedObjects;
+		private static Dictionary<int, Entity> entityIDs;
 		#endregion
 
 		#region constructors
 		public Entity() {
 			if (TaggedObjects == null) TaggedObjects = new Dictionary<string, List<Entity>>();
-			if (NamedObjects == null) NamedObjects = new Dictionary<string, List<Entity>>(201);
+			if (entityIDs == null) entityIDs = new Dictionary<int, Entity>(201);
 			Components = new List<Component>(1);
 			Children = new List<Entity>();
 			Parent = Level.MainLevel.Root;
@@ -64,6 +55,8 @@ namespace Pillar3D {
 			Name = "Game Object";
 			Tag = "untagged";
 			ContainerLevel = Level.CurrentLevel;
+			for (int r = (new Random()).Next(); entityIDs.ContainsKey(r); r = (new Random()).Next()) ID = r;
+			entityIDs.Add(ID, this);
 		}
 
 		public Entity(string name) : this() {
@@ -71,7 +64,7 @@ namespace Pillar3D {
 		}
 
 		~Entity() {
-			NamedObjects[name].Remove(this);
+			entityIDs.Remove(ID);
 		}
 		#endregion
 
