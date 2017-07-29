@@ -14,7 +14,8 @@ instead of
 the engine will be unable to update its internal state, and thus not function properly.  
 
 The explicit nature of this means that you have some extremely powerful options in terms of update behaviour, particularly in modifying update behaviour from a coroutine:
-```void SomeClass () : base(false) => RoutineRunner.StartRoutine(UpdateSwapper());
+```cs
+void SomeClass () : base(false) => RoutineRunner.StartRoutine(UpdateSwapper());
 IENumerator<YieldInstruction> UpdateSwapper () {
   Rails.Update += Update1;
   yield return new WaitForSeconds(2f);
