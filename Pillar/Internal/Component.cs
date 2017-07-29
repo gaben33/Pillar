@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Pillar3D {
 	public class Component {
 		//I'm trusting you with a public set.  please don't abuse it.  
-		public Entity Container;
+		protected internal Entity Container;
 		public static bool AllowMultiple;//can the same component be added multiple times?
 		public int ID { get; private set; }
 		private static Dictionary<int, Component> componentIDs; 

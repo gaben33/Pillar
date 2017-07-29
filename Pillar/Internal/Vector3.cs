@@ -6,6 +6,123 @@ using System.Threading.Tasks;
 
 
 namespace Pillar3D {
+	public class Vector4 : Vector3 {
+		public float w;
+
+		#region constructors
+		public Vector4() : base() {
+			w = 0;
+		}
+		public Vector4(float x, float y, float z, float w) : base(x,y,z) {
+			this.w = w;
+		}
+		public Vector4(Vector4 original) : base(original) {
+			w = original.w;
+		}
+		public Vector4(Vector3 original) : base(original) {
+			w = 0;
+		}
+		public Vector4(Vector2 original) : base(original) {
+			w = 0;
+		}
+		#endregion
+
+		#region math functions
+		new public float Magnitude () {
+			return (float) (Math.Sqrt((x * x) + (y * y) + (z * z) + (w * w)));
+		}
+
+		new public float SqrMagnitude () {
+			return (x * x) + (y * y) + (z * z) + (w * w);
+		}
+
+		public static float Dot (Vector4 lhs, Vector4 rhs) {
+			return (lhs.x * rhs.x) + (lhs.y * rhs.y) + (lhs.z * rhs.z) + (lhs.w * rhs.w);
+		}
+
+		new public Vector4 Normalize () {
+			float mag = Magnitude();
+			x /= mag;
+			y /= mag;
+			z /= mag;
+			w /= mag;
+			return this;
+		}
+
+		new public Vector4 Normalized () {
+			return new Vector4(this) / Magnitude();
+		}
+
+		public static float Angle (Vector4 lhs, Vector4 rhs) {
+			return (float) Math.Acos(Dot(lhs.Normalized(), rhs.Normalized()));
+		}
+
+		public static Vector4 Lerp (Vector4 a, Vector4 b, float t) {
+			return new Vector4() {
+				x = Utilities.Lerp(a.x, b.x, t),
+				y = Utilities.Lerp(a.y, b.y, t),
+				z = Utilities.Lerp(a.z, b.z, t),
+				w = Utilities.Lerp(a.w, b.w, t)
+			};
+		}
+		#endregion
+
+		#region operators
+		public static Vector4 operator * (Vector4 lhs, float rhs) {
+			return new Vector4(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs, lhs.w * rhs);
+		}
+		public static Vector4 operator * (float lhs, Vector4 rhs) {
+			return rhs * lhs;
+		}
+		public static Vector4 operator / (Vector4 lhs, float rhs) {
+			return new Vector4(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs, lhs.w / rhs);
+		}
+		public static Vector4 operator + (Vector4 lhs, Vector4 rhs) {
+			return new Vector4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
+		}
+		public static Vector4 operator - (Vector4 lhs, Vector4 rhs) {
+			return new Vector4(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
+		}
+		public static Vector4 operator * (Vector4 lhs, Vector4 rhs) {
+			return new Vector4(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z, lhs.w * rhs.w);
+		}
+		public static Vector4 operator / (Vector4 lhs, Vector4 rhs) {
+			return new Vector4(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z, lhs.w / rhs.w);
+		}
+
+		new public float this[int i] {
+			get { return (new float[] { x, y, z, w })[i]; }
+			set {
+				switch (i) {
+					case (0):
+						x = value;
+						break;
+					case (1):
+						y = value;
+						break;
+					case (2):
+						z = value;
+						break;
+					default:
+						w = value;
+						break;
+				}
+			}
+		}
+		#endregion
+
+		#region misc functions
+		public override string ToString () {
+			return $"<{x}, {y}, {z}, {w}>";
+		}
+		#endregion
+
+		#region defaults
+		new public static Vector4 One { get { return new Vector4(1, 1, 1, 1); } }
+		new public static Vector4 Zero { get { return new Vector4(0, 0, 0, 0); } }
+		#endregion
+	}
+
 	public class Vector3 : Vector2 {
 		public float z;
 
@@ -125,13 +242,13 @@ namespace Pillar3D {
 
 		#region defaults
 		public static Vector3 Forward { get { return new Vector3(0, 0, 1); } }
-		public static Vector3 Up { get { return new Vector3(0, 1, 0); } }
-		public static Vector3 Right { get { return new Vector3(1, 0, 0); } }
+		new public static Vector3 Up { get { return new Vector3(0, 1, 0); } }
+		new public static Vector3 Right { get { return new Vector3(1, 0, 0); } }
 		public static Vector3 Back { get { return new Vector3(0, 0, -1); } }
-		public static Vector3 Down { get { return new Vector3(0, -1, 0); } }
-		public static Vector3 Left { get { return new Vector3(-1, 0, 0); } }
-		public static Vector3 One { get { return new Vector3(1, 1, 1); } }
-		public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
+		new public static Vector3 Down { get { return new Vector3(0, -1, 0); } }
+		new public static Vector3 Left { get { return new Vector3(-1, 0, 0); } }
+		new public static Vector3 One { get { return new Vector3(1, 1, 1); } }
+		new public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
 		#endregion
 	}
 
@@ -235,6 +352,9 @@ namespace Pillar3D {
 		#region constructors
 		public VectorN(int dimension) {
 			values = new float[dimension];
+		}
+		public VectorN(float[] initialValues) {
+			values = initialValues;
 		}
 		#endregion
 
