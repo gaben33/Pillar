@@ -45,8 +45,6 @@ namespace Pillar3D {
 			}
 		}
 
-		public static void RunRoutine(IEnumerator<YieldInstruction> routine) {
-			routines.Add(routine);
-		}
+		public static void RunRoutine(IEnumerator<YieldInstruction> routine) => routines.Add(routine);
 	}
 }

@@ -59,11 +59,11 @@ namespace Pillar3D {
 		}
 
 		public Matrix Transpose() {
-			if (!Square) throw new ArgumentException("Transpose is only defined for a square matrix!");
-			int d = Width;
-			Matrix result = new Matrix(d, d);
-			for (int i = 0; i < d; i++) {
-				for (int j = 0; j < d; j++) result[i, j] = this[j, i];
+			int w = Width;
+			int h = Height;
+			Matrix result = new Matrix(w, h);
+			for (int i = 0; i < w; i++) {
+				for (int j = 0; j < h; j++) result[i, j] = this[j, i];
 			}
 			return result;
 		}
@@ -148,6 +148,20 @@ namespace Pillar3D {
 			}
 			return result;
 		}
+		public void SetColumn (int column, float[] values) {
+			if (column > Height) throw new ArgumentException("column doesn't exist");
+			if (values.Length != this.values.Length) throw new ArgumentException("Input vector has incorrect dimensions");
+			for (int i = 0; i < Height; i++) {
+				this[i, column] = values[i];
+			}
+		}
+		public void SetRow (int row, float[] values) {
+			if (row > Width) throw new ArgumentException("column doesn't exist");
+			if (values.Length != this.values[0].Length) throw new ArgumentException("Input vector has incorrect dimensions");
+			for (int i = 0; i < Width; i++) {
+				this[row, i] = values[i];
+			}
+		}
 		#endregion
 
 		#region functions
@@ -192,9 +206,7 @@ namespace Pillar3D {
 			};
 		}
 
-		public Matrix4x4(float[][] initialValues) : base(initialValues) {
-
-		}
+		public Matrix4x4(float[][] initialValues) : base(initialValues) { }
 
 		new public Vector4 GetColumn(int column) {
 			if (column > 4) throw new ArgumentException("column doesn't exist");
@@ -251,37 +263,21 @@ namespace Pillar3D {
 		}
 
 		public static Matrix4x4 Rotate(Vector3 r) {
-			float Deg2Rad = (float)Math.PI / 180f;
-			float radX = r.x * Deg2Rad;
-			float radY = r.y * Deg2Rad;
-			float radZ = r.z * Deg2Rad;
-			float sinX = (float)Math.Sin(radX);
-			float cosX = (float)Math.Cos(radX);
-			float sinY = (float)Math.Sin(radY);
-			float cosY = (float)Math.Cos(radY);
-			float sinZ = (float)Math.Sin(radZ);
-			float cosZ = (float)Math.Cos(radZ);
+			float radX = r.x * Mathf.Deg2Rad;
+			float radY = r.y * Mathf.Deg2Rad;
+			float radZ = r.z * Mathf.Deg2Rad;
+			float sinX = Mathf.Sin(radX);
+			float cosX = Mathf.Cos(radX);
+			float sinY = Mathf.Sin(radY);
+			float cosY = Mathf.Cos(radY);
+			float sinZ = Mathf.Sin(radZ);
+			float cosZ = Mathf.Cos(radZ);
 
 			Matrix4x4 matrix = new Matrix4x4();
-			matrix.SetColumn(0, new Vector4(
-				cosY * cosZ,
-				cosX * sinZ + sinX * sinY * cosZ,
-				sinX * sinZ - cosX * sinY * cosZ,
-				0f
-			));
-			matrix.SetColumn(1, new Vector4(
-				-cosY * sinZ,
-				cosX * cosZ - sinX * sinY * sinZ,
-				sinX * cosZ + cosX * sinY * sinZ,
-				0f
-			));
-			matrix.SetColumn(2, new Vector4(
-				sinY,
-				-sinX * cosY,
-				cosX * cosY,
-				0f
-			));
-			matrix.SetColumn(3, new Vector4(0f, 0f, 0f, 1f));
+			matrix.SetColumn(0, new Vector4(cosY * cosZ, cosX * sinZ + sinX * sinY * cosZ, sinX * sinZ - cosX * sinY * cosZ, 0));
+			matrix.SetColumn(1, new Vector4(-cosY * sinZ, cosX * cosZ - sinX * sinY * sinZ, sinX * cosZ + cosX * sinY * sinZ, 0));
+			matrix.SetColumn(2, new Vector4(sinY, -sinX * cosY,	cosX * cosY, 0));
+			matrix.SetColumn(3, new Vector4(0, 0, 0, 1));
 			return matrix;
 		}
 	}

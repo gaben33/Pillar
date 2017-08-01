@@ -51,7 +51,11 @@ namespace Pillar3D {
 			}
 
 			public float Evaluate() {
-				return (Input.GetKey(Positive) ? 1f : 0f) + (Input.GetKey(Negative) ? -1f : 0);
+				return (GetKey(Positive) ? 1f : 0f) + (GetKey(Negative) ? -1f : 0);
+			}
+
+			public bool Dead () {
+				return Mathf.Approximately(Evaluate(), 0f);
 			}
 		}
 		public class InputVector2D {
@@ -60,18 +64,15 @@ namespace Pillar3D {
 				X = x;
 				Y = y;
 			}
-			public Vector2 Evaluate() {
-				return new Vector2(X.Evaluate(), Y.Evaluate());
-			}
+			public Vector2 Evaluate() => new Vector2(X.Evaluate(), Y.Evaluate());
+			public bool Dead() => Evaluate() == Vector2.Zero;
 		}
 		public class InputVector3D : InputVector2D {
 			public InputAxis Z;
 			public InputVector3D (InputAxis x, InputAxis y, InputAxis z) : base(x, y) {
 				Z = z;
 			}
-			new public Vector3 Evaluate() {
-				return new Vector3(X.Evaluate(), Y.Evaluate(), Z.Evaluate());
-			}
+			new public Vector3 Evaluate() => new Vector3(X.Evaluate(), Y.Evaluate(), Z.Evaluate());
 		}
 		public static void Poll () {
 			//PressedKeys = CurrentKeysDown().ToArray();

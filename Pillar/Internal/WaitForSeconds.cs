@@ -1,10 +1,30 @@
 ﻿using System;
+using System.Timers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Pillar3D.Coroutines {
+	public class WaitForSecondsAccurate : YieldInstruction {
+		public override Instruction GetInstruction() {
+			bool resume = timer.Elapsed.TotalSeconds > time;
+			if(resume) {
+				timer.Stop();
+				return Instruction.resume;
+			}
+			return Instruction.wait;
+		}
+
+		private Stopwatch timer;
+		private float time;
+		public WaitForSecondsAccurate(float t) {
+			timer = new Stopwatch();
+			timer.Start();
+			time = t;
+		}
+	}
 	public class WaitForSecondsUnscaled : YieldInstruction {
 		public override Instruction GetInstruction() {
 			return ((Time.RealTime > WaitTime + StartTime) ? Instruction.resume : Instruction.wait);

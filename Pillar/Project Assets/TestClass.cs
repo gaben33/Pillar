@@ -17,6 +17,7 @@ class TestClass {
 		Console.WriteLine($"\nstarting, time is {Time.RealTime}");
 		//start
 		Rails.Update += PrintKeyState;
+		//yield return new WaitForSecondsAccurate(10f);
 		yield return new WaitForSecondsFunctional(10f, PrintWaitProgress);
 		//yield return new WaitUntil(() => Input.GetKey(System.Windows.Input.Key.Escape));
 		float elapsed = Time.RealTime - startTime;
@@ -37,7 +38,8 @@ class TestClass {
 	}
 
 	private void PrintWaitProgress (float t) {
-		Console.WriteLine($"\r{t}");
+		//Console.Write($"\r{(int)Time.RealTime}, {t}   ");
+		Console.Write($"\r{Mathf.IsPowerOfTwo(16)}");
 	}
 
 	private void PrintKeyState () {
