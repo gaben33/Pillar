@@ -33,6 +33,7 @@ namespace Pillar3D {
 			GlobalPersistantUpdate = time.Frame;
 			RoutineRunner runner = new RoutineRunner();
 			Level main = new Level("main");
+			ThreadManager.AddLevel(main);
 			while (!exit) {
 				if (!GlobalPause) GlobalUpdate?.Invoke();
 				GlobalPersistantUpdate();
