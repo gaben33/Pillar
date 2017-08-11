@@ -8,38 +8,15 @@ using System.Windows.Input;
 
 
 namespace Pillar3D {
-	public class Input {
+	public static class Input {
 		#region variables
 		public static Key CurrentKey { get; private set;}
 		//public static Key[] PressedKeys { get; private set; }
 		//public bool AnyKey { get { return PressedKeys.Any(); } }
-		private static Dictionary<string, InputAxis> Axes;
-		private static Dictionary<string, InputVector2D> VectorInputs2D;
-		private static Dictionary<string, InputVector3D> VectorInputs3D;
-		private static Dictionary<Key, bool> CachedKeyValues;
-		private static Input instance;
-		/*private static readonly byte[] DistinctVirtualKeys = Enumerable
-			.Range(0, 256)
-			.Select(KeyInterop.KeyFromVirtualKey)
-			.Where(item => item != Key.None)
-			.Distinct()
-			.Select(item => (byte)KeyInterop.VirtualKeyFromKey(item))
-			.ToArray();*/
-		#endregion
-
-		#region constructors
-		public Input() {
-			instance = this;
-			Rails.PersistantUpdate += Poll;
-			Axes = new Dictionary<string, InputAxis>();
-			VectorInputs2D = new Dictionary<string, InputVector2D>();
-			VectorInputs3D = new Dictionary<string, InputVector3D>();
-			CachedKeyValues = new Dictionary<Key, bool>(123);
-			Poll();
-		}
-		~Input() {
-			Rails.PersistantUpdate -= Poll;
-		}
+		private static Dictionary<string, InputAxis> Axes = new Dictionary<string, InputAxis>();
+		private static Dictionary<string, InputVector2D> VectorInputs2D = new Dictionary<string, InputVector2D>();
+		private static Dictionary<string, InputVector3D> VectorInputs3D = new Dictionary<string, InputVector3D>();
+		private static Dictionary<Key, bool> CachedKeyValues = new Dictionary<Key, bool>(123);
 		#endregion
 
 		#region internal
@@ -73,9 +50,6 @@ namespace Pillar3D {
 				Z = z;
 			}
 			new public Vector3 Evaluate() => new Vector3(X.Evaluate(), Y.Evaluate(), Z.Evaluate());
-		}
-		public static void Poll () {
-			//PressedKeys = CurrentKeysDown().ToArray();
 		}
 		//private static IEnumerable<Key> CurrentKeysDown () {
 		//	var keys = new byte[256];

@@ -25,6 +25,7 @@ namespace Pillar3D {
 		public int ID { get; private set; }
 		public Level ContainerLevel { get; private set; }
 		public Action OnParentChanged;
+		public Action OnLevelChanged;
 		public string Tag {
 			get {
 				return tag;

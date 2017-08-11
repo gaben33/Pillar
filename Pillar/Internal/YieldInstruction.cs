@@ -11,14 +11,13 @@ namespace Pillar3D {
 	public enum Instruction { wait, resume, exit }
 
 	public class RoutineRunner {
-		private static List<IEnumerator<YieldInstruction>> routines;
+		private static List<IEnumerator<YieldInstruction>> routines = new List<IEnumerator<YieldInstruction>>(50);
 		public RoutineRunner() {
-			routines = new List<IEnumerator<YieldInstruction>>(50);
-			Rails.PersistantUpdate += Frame;
+			Rails.GlobalPersistantUpdate += Frame;
 		}
 
 		~RoutineRunner () {
-			Rails.PersistantUpdate -= Frame;
+			Rails.GlobalPersistantUpdate -= Frame;
 		}
 
 		//advance one frame
