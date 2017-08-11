@@ -10,6 +10,9 @@ namespace Pillar3D {
 		protected internal Entity Container;
 		public static bool AllowMultiple;//can the same component be added multiple times?
 		public int ID { get; private set; }
+		protected Action Update { get { return Container.ContainerLevel.Rail.Update; } set { Container.ContainerLevel.Rail.Update = value; } }
+		protected Action PersistantUpdate { get { return Container.ContainerLevel.Rail.PersistantUpdate; } set { Container.ContainerLevel.Rail.PersistantUpdate = value; } }
+		protected bool Paused { get { return Container.ContainerLevel.Rail.Paused; } set { Container.ContainerLevel.Rail.Paused = value; } }
 		private static Dictionary<int, Component> componentIDs; 
 
 		public Component(bool allowMultiple) {

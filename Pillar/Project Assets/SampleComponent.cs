@@ -5,11 +5,11 @@ using Pillar3D;
 public class SampleComponent : Component {
 
 	public SampleComponent() : base(true) {
-		Container.ContainerLevel.Rail.Update += Update;
+		base.Update += Update;
 		Container.OnLevelChanged += Rebase;
 	}
 
-	public void Update() {
+	new public void Update() {
 
 	}
 
