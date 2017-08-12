@@ -21,8 +21,8 @@ namespace Pillar3D {
 		public Level(string name, int thread) {
 			if (MainLevel == null) CurrentLevel = MainLevel = this;
 			Name = name;
-			Root = new Entity("Root");
 			Rail = new Rails();
+			Root = new Entity("Root");
 			ThreadManager.AddLevel(this, thread);
 		}
 
@@ -31,6 +31,8 @@ namespace Pillar3D {
 			Level l = (Level)(new XmlSerializer(typeof(Level))).Deserialize(defaults);
 			Root = l.Root;
 			Name = l.Name;
+			Rail = l.Rail;
+			ThreadManager.AddLevel(this);
 		}
 
 		public void Frame () {

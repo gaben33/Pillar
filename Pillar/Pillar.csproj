@@ -55,6 +55,7 @@
     <Compile Include="Internal\LAlgTransform.cs" />
     <Compile Include="Internal\Level.cs" />
     <Compile Include="Internal\Matrix.cs" />
+    <Compile Include="Internal\PillarBehaviour.cs" />
     <Compile Include="Internal\Program.cs" />
     <Compile Include="Internal\Quaternion.cs" />
     <Compile Include="Internal\Settings.cs" />
