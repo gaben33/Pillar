@@ -1,0 +1,84 @@
+\hypertarget{class_pillar3_d_1_1_quaternion}{}\section{Pillar3\+D.\+Quaternion Class Reference}
+\label{class_pillar3_d_1_1_quaternion}\index{Pillar3\+D.\+Quaternion@{Pillar3\+D.\+Quaternion}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_ae31516efc345bbc4ccbaf8c00348e5de}\label{class_pillar3_d_1_1_quaternion_ae31516efc345bbc4ccbaf8c00348e5de}} 
+{\bfseries Quaternion} (float x, float y, float z, float w)
+\item 
+\hyperlink{class_pillar3_d_1_1_quaternion_a82aed3ea7cf7302ebb89d33e45941413}{Quaternion} (\hyperlink{class_pillar3_d_1_1_vector3}{Vector3} Angles)
+\begin{DoxyCompactList}\small\item\em Angles is xyz on a unit sphere \end{DoxyCompactList}\item 
+\hyperlink{class_pillar3_d_1_1_vector3}{Vector3} \hyperlink{class_pillar3_d_1_1_quaternion_aba7fc95eb3ab95f2ca51d4a205c798db}{To\+Angles} ()
+\begin{DoxyCompactList}\small\item\em Converts to xyz on a unit sphere \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_aeb011cb05aa967ba639e53234ab74054}\label{class_pillar3_d_1_1_quaternion_aeb011cb05aa967ba639e53234ab74054}} 
+\hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} {\bfseries Look\+Rotation} (\hyperlink{class_pillar3_d_1_1_vector3}{Vector3} forward)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a5184e9984a322ed6acc53da1954d10f2}\label{class_pillar3_d_1_1_quaternion_a5184e9984a322ed6acc53da1954d10f2}} 
+\hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} {\bfseries Look\+Rotation} (\hyperlink{class_pillar3_d_1_1_vector3}{Vector3} forward, \hyperlink{class_pillar3_d_1_1_vector3}{Vector3} up)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a55910a158e22f9b1eb91bfc63358ba9a}\label{class_pillar3_d_1_1_quaternion_a55910a158e22f9b1eb91bfc63358ba9a}} 
+static \hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} {\bfseries operator$\ast$} (\hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} a, \hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} b)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a4aad30009497a99cc92be7803bdb787a}\label{class_pillar3_d_1_1_quaternion_a4aad30009497a99cc92be7803bdb787a}} 
+static \hyperlink{class_pillar3_d_1_1_vector3}{Vector3} {\bfseries operator$\ast$} (\hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} lhs, \hyperlink{class_pillar3_d_1_1_vector3}{Vector3} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_af1536058adc5b68a327102d5f20f61a4}\label{class_pillar3_d_1_1_quaternion_af1536058adc5b68a327102d5f20f61a4}} 
+static \hyperlink{class_pillar3_d_1_1_vector3}{Vector3} {\bfseries operator$\ast$} (\hyperlink{class_pillar3_d_1_1_vector3}{Vector3} lhs, \hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_ac659977c8ac4a053df26033117f0cbcb}\label{class_pillar3_d_1_1_quaternion_ac659977c8ac4a053df26033117f0cbcb}} 
+static {\bfseries operator Matrix} (\hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} q)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a7437a39c5debcbdd2f97812eadf664aa}\label{class_pillar3_d_1_1_quaternion_a7437a39c5debcbdd2f97812eadf664aa}} 
+float {\bfseries x}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a9e0a2596ecdb60e40faf6580dd1ee0c2}\label{class_pillar3_d_1_1_quaternion_a9e0a2596ecdb60e40faf6580dd1ee0c2}} 
+static \hyperlink{class_pillar3_d_1_1_quaternion}{Quaternion} {\bfseries Identity}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_a82aed3ea7cf7302ebb89d33e45941413}\label{class_pillar3_d_1_1_quaternion_a82aed3ea7cf7302ebb89d33e45941413}} 
+\index{Pillar3\+D\+::\+Quaternion@{Pillar3\+D\+::\+Quaternion}!Quaternion@{Quaternion}}
+\index{Quaternion@{Quaternion}!Pillar3\+D\+::\+Quaternion@{Pillar3\+D\+::\+Quaternion}}
+\subsubsection{\texorpdfstring{Quaternion()}{Quaternion()}}
+{\footnotesize\ttfamily Pillar3\+D.\+Quaternion.\+Quaternion (\begin{DoxyParamCaption}\item[{\hyperlink{class_pillar3_d_1_1_vector3}{Vector3}}]{Angles }\end{DoxyParamCaption})}
+
+
+
+Angles is xyz on a unit sphere 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Angles} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pillar3_d_1_1_quaternion_aba7fc95eb3ab95f2ca51d4a205c798db}\label{class_pillar3_d_1_1_quaternion_aba7fc95eb3ab95f2ca51d4a205c798db}} 
+\index{Pillar3\+D\+::\+Quaternion@{Pillar3\+D\+::\+Quaternion}!To\+Angles@{To\+Angles}}
+\index{To\+Angles@{To\+Angles}!Pillar3\+D\+::\+Quaternion@{Pillar3\+D\+::\+Quaternion}}
+\subsubsection{\texorpdfstring{To\+Angles()}{ToAngles()}}
+{\footnotesize\ttfamily \hyperlink{class_pillar3_d_1_1_vector3}{Vector3} Pillar3\+D.\+Quaternion.\+To\+Angles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Converts to xyz on a unit sphere 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/gaben/\+Documents/\+Visual Studio 2015/\+Projects/\+Pillar/\+Pillar/\+Internal/Quaternion.\+cs\end{DoxyCompactItemize}

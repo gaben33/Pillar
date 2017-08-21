@@ -18,14 +18,6 @@ namespace Pillar3D {
 			ThreadManager.AddLevel(this);
 		}
 
-		public Level(string name, int thread) {
-			if (MainLevel == null) CurrentLevel = MainLevel = this;
-			Name = name;
-			Rail = new Rails();
-			Root = new Entity("Root");
-			ThreadManager.AddLevel(this, thread);
-		}
-
 		public Level(XmlReader defaults) {
 			if (MainLevel == null) MainLevel = this;
 			Level l = (Level)(new XmlSerializer(typeof(Level))).Deserialize(defaults);
@@ -39,5 +31,7 @@ namespace Pillar3D {
 			Rail.PersistantUpdate?.Invoke();
 			if (!Rail.Paused) Rail.Update?.Invoke();
 		}
+
+        public int GetStress () => Rail.Update.GetInvocationList().Length + Rail.PersistantUpdate.GetInvocationList().Length;
 	}
 }

@@ -33,11 +33,15 @@ namespace Pillar3D {
 			GlobalPersistantUpdate = time.Frame;
 			RoutineRunner runner = new RoutineRunner();
 			Level main = new Level("main");
-			ThreadManager.AddLevel(main);
+
 			while (!exit) {
+				Input.Poll();
 				if (!GlobalPause) GlobalUpdate?.Invoke();
 				GlobalPersistantUpdate();
 				if (ThreadManager.Frame()) Thread.Sleep(1);
+
+				Console.Write($"\r{Time.SampleCount}: {1f/Time.SmoothDeltaTime}       ");
+				if (Input.GetKeyDown(Key.Up)) Time.SampleCount += 100;
 			}
 			return 0;
 		}
@@ -49,27 +53,62 @@ namespace Pillar3D {
 			entity.ContainerLevel.Root.Children.Remove(entity);
 			DebasedObjectQueue[newLevel].Enqueue(entity);
 		}
+
+        public static void Destroy<T>(ref T obj) {
+            obj = default(T);
+        }
 	}
 
 	public class ThreadManager {
 		static List<TrackedThread> threads = new List<TrackedThread>();
+        private static Queue<Level> queuedLevels = new Queue<Level>();
 
-		public static void AddLevel (Level level) {
-			if (threads.Count == 0 || threads.Count < Environment.ProcessorCount) threads.Add(new TrackedThread(level));
-			else {
-				TrackedThread lowestThread = threads[0];
-				for(int i = 1; i < threads.Count; i++) if (threads[i].Stress < lowestThread.Stress) lowestThread = threads[i];
-				lowestThread.AddLevel(level);
-			}
-			Rails.DebasedObjectQueue.Add(level, new Queue<Entity>());
-		}
+        public static void AddLevel (Level level) {
+            queuedLevels.Enqueue(level);
+            Rails.DebasedObjectQueue.Add(level, new Queue<Entity>());
+        }
 
-		public static void AddLevel (Level level, int thread) {
-			thread %= Environment.ProcessorCount;
-			if (threads.Count < thread) threads.Add(new TrackedThread(level));
-			else threads[thread].AddLevel(level);
-			Rails.DebasedObjectQueue.Add(level, new Queue<Entity>());
-		}
+        public static void RemoveLevel (Level level) {
+            if (!Rails.DebasedObjectQueue.ContainsKey(level)) throw new ArgumentException("Level has not been added to the thread manager.");
+            Rails.DebasedObjectQueue.Remove(level);
+            for(int i = 0; i < threads.Count; i++) {
+                if(threads[i].Levels.Contains(level)) {
+                    threads[i].Levels.Remove(level);
+                    return;
+                }
+            }
+        }
+
+        //places all levels in the queue into the thread pool
+        private static void Flush () {
+            while (queuedLevels.Count > 0) PlaceIndividual(queuedLevels.Dequeue());
+        }
+
+        private static void FlushThread (TrackedThread thread) {
+            for(int i = 0; i < thread.Levels.Count; i++) {
+                queuedLevels.Enqueue(thread.Levels[i]);
+            }
+            thread.Levels = new List<Level>();
+        }
+
+        private static void PlaceIndividual (Level level) {
+            if (threads.Count == 0 || threads.Count < Environment.ProcessorCount) threads.Add(new TrackedThread(level));
+            else {
+                TrackedThread lowestThread = threads[GetLowestStressThread()];
+                lowestThread.Stress += level.GetStress();
+                lowestThread.AddLevel(level);
+            }
+        }
+
+        private static void ResetThreadStress () {
+            for (int i = 0; i < threads.Count; i++) threads[i].Stress = 0;
+        }
+
+        private static int GetLowestStressThread () {
+            int lt = 0;
+            for (int i = 1; i < threads.Count; i++) if (threads[i].Stress < threads[lt].Stress) lt = i;
+            return lt;
+        }
 
 		public static bool GetThreadsIdle () {
 			if (threads.Count == 0) return false;
@@ -81,18 +120,28 @@ namespace Pillar3D {
 		public static bool Frame () {
 			switch(Settings.VSync) {
 				case SyncState.Off:
-					for (int i = 0; i < threads.Count; i++) if(!threads[i].thread.IsAlive) threads[i].Frame();
-						return false;
-				case SyncState.SyncThreads:
-					if (GetThreadsIdle()) for (int i = 0; i < threads.Count; i++) threads[i].Frame();
-					else return true;
+                    for (int i = 0; i < threads.Count; i++) if (!threads[i].thread.IsAlive) FlushThread(threads[i]);
+                    Flush();
 					return false;
+				case SyncState.SyncThreads:
+                    if (GetThreadsIdle()) {
+                        for (int i = 0; i < threads.Count; i++) FlushThread(threads[i]);
+                        Flush();
+                    } else {
+                        return true;
+                    }
+                    Flush();
+                    return false;
 				case SyncState.ScreenRefresh:
 					bool canRefresh = 1f / Time.DeltaTime < Application.RefreshRate;
-					if(canRefresh && GetThreadsIdle()) for (int i = 0; i < threads.Count; i++) threads[i].Frame();
+                    if (canRefresh && GetThreadsIdle()) {
+                        for (int i = 0; i < threads.Count; i++) FlushThread(threads[i]);
+                        Flush();
+                    }
 					return canRefresh;
 				default:
-					for (int i = 0; i < threads.Count; i++) if (!threads[i].thread.IsAlive) threads[i].Frame();
+					for (int i = 0; i < threads.Count; i++) if (!threads[i].thread.IsAlive) FlushThread(threads[i]);
+                    Flush();
 					return false;
 			}
 		}

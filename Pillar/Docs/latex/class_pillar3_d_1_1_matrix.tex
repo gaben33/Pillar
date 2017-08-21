@@ -1,0 +1,100 @@
+\hypertarget{class_pillar3_d_1_1_matrix}{}\section{Pillar3\+D.\+Matrix Class Reference}
+\label{class_pillar3_d_1_1_matrix}\index{Pillar3\+D.\+Matrix@{Pillar3\+D.\+Matrix}}
+Inheritance diagram for Pillar3\+D.\+Matrix\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_pillar3_d_1_1_matrix}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a64beebf9fcf02359cef7c67192b9ed2a}\label{class_pillar3_d_1_1_matrix_a64beebf9fcf02359cef7c67192b9ed2a}} 
+{\bfseries Matrix} (int rows, int columns)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_ab235003e1b5247725d21d31d78b36d8f}\label{class_pillar3_d_1_1_matrix_ab235003e1b5247725d21d31d78b36d8f}} 
+{\bfseries Matrix} (float\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} values)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_aef7d44611db4397544f49ca8033cfee0}\label{class_pillar3_d_1_1_matrix_aef7d44611db4397544f49ca8033cfee0}} 
+float {\bfseries Determinant} ()
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a4dfa66ec81485f719f0d27056cd73a46}\label{class_pillar3_d_1_1_matrix_a4dfa66ec81485f719f0d27056cd73a46}} 
+float {\bfseries Trace} ()
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a65c68040c1e23a49cf9d9e3372357ec4}\label{class_pillar3_d_1_1_matrix_a65c68040c1e23a49cf9d9e3372357ec4}} 
+\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries Transpose} ()
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a7ffcc88bea24885317f5fdb7da79607f}\label{class_pillar3_d_1_1_matrix_a7ffcc88bea24885317f5fdb7da79607f}} 
+\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries Get\+Exclusionary\+Matrix} (int row, int column)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a935dcbdbfb9c78de7edecee966009926}\label{class_pillar3_d_1_1_matrix_a935dcbdbfb9c78de7edecee966009926}} 
+\hyperlink{class_pillar3_d_1_1_vector_n}{VectorN} {\bfseries Get\+Column} (int column)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a8a18678e237023687dd21994d57d144b}\label{class_pillar3_d_1_1_matrix_a8a18678e237023687dd21994d57d144b}} 
+\hyperlink{class_pillar3_d_1_1_vector_n}{VectorN} {\bfseries Get\+Row} (int row)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a0e63faade77870cb72dc470d70c3fb73}\label{class_pillar3_d_1_1_matrix_a0e63faade77870cb72dc470d70c3fb73}} 
+void {\bfseries Set\+Column} (int column, float\mbox{[}$\,$\mbox{]} values)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_af02cd4b7c8b711136ee3a707b77cf84e}\label{class_pillar3_d_1_1_matrix_af02cd4b7c8b711136ee3a707b77cf84e}} 
+void {\bfseries Set\+Row} (int row, float\mbox{[}$\,$\mbox{]} values)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a0052f6e33677639477622eaf435602ba}\label{class_pillar3_d_1_1_matrix_a0052f6e33677639477622eaf435602ba}} 
+override string {\bfseries To\+String} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_ae5f90c6b0579e667c72247975b231b9f}\label{class_pillar3_d_1_1_matrix_ae5f90c6b0579e667c72247975b231b9f}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries operator+} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} lhs, \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_aab04185064d4b400fe282b6a3cbf6c5a}\label{class_pillar3_d_1_1_matrix_aab04185064d4b400fe282b6a3cbf6c5a}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries operator-\/} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} lhs, \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a483e65043cf5c39af7f7833870b3c505}\label{class_pillar3_d_1_1_matrix_a483e65043cf5c39af7f7833870b3c505}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries operator$\ast$} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} lhs, float scalar)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a7256e25b0ee706af94756dd7af22527b}\label{class_pillar3_d_1_1_matrix_a7256e25b0ee706af94756dd7af22527b}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries operator$\ast$} (float scalar, \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a5362151af78f6f9323673dc9dd4b6cc9}\label{class_pillar3_d_1_1_matrix_a5362151af78f6f9323673dc9dd4b6cc9}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries operator$\ast$} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} lhs, \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} rhs)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a113c5c38003e24988d7b6fb044729156}\label{class_pillar3_d_1_1_matrix_a113c5c38003e24988d7b6fb044729156}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries Identity} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} A)
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a803e9cec7824186a4e3e4fcca9220317}\label{class_pillar3_d_1_1_matrix_a803e9cec7824186a4e3e4fcca9220317}} 
+static \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} {\bfseries Zero} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} A)
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_ab334d3ded7308b8369f10a8ac96995e8}\label{class_pillar3_d_1_1_matrix_ab334d3ded7308b8369f10a8ac96995e8}} 
+static float {\bfseries Get\+Result} (\hyperlink{class_pillar3_d_1_1_matrix}{Matrix} lhs, \hyperlink{class_pillar3_d_1_1_matrix}{Matrix} rhs, int x, int y)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a00f82141d33fb84c859396554ba70eda}\label{class_pillar3_d_1_1_matrix_a00f82141d33fb84c859396554ba70eda}} 
+float \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} {\bfseries values}
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a28dc4fde57d531d6f11334e5431e5e56}\label{class_pillar3_d_1_1_matrix_a28dc4fde57d531d6f11334e5431e5e56}} 
+int {\bfseries Width}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a2f92675194c0181b5a96ea3fa454a10e}\label{class_pillar3_d_1_1_matrix_a2f92675194c0181b5a96ea3fa454a10e}} 
+int {\bfseries Height}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a1f525c0a15de27db30feca3170a15068}\label{class_pillar3_d_1_1_matrix_a1f525c0a15de27db30feca3170a15068}} 
+bool {\bfseries Square}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_pillar3_d_1_1_matrix_a6f45e28d4b1d6c79f9924c39c15a3e95}\label{class_pillar3_d_1_1_matrix_a6f45e28d4b1d6c79f9924c39c15a3e95}} 
+float {\bfseries this\mbox{[}int row, int col\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/gaben/\+Documents/\+Visual Studio 2015/\+Projects/\+Pillar/\+Pillar/\+Internal/Matrix.\+cs\end{DoxyCompactItemize}

@@ -20,6 +20,13 @@ namespace Pillar3D {
 		#endregion
 
 		#region internal
+		public static void Poll () {
+			Key[] keys = CachedKeyValues.Keys.ToArray();
+			for(int i = 0; i < keys.Length; i++) {
+				CachedKeyValues[keys[i]] = GetKey(keys[i]);
+			}
+		}
+
 		public class InputAxis {
 			private Key Negative, Positive;
 			public InputAxis(Key NegativeKey, Key PositiveKey) {

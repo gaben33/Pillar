@@ -35,11 +35,9 @@ namespace Pillar3D {
 		}
 
 		#region Utility Methods
-		public static Entity Instantiate(Entity original) {
-			return original.Clone();
-		}
+		public static Entity Instantiate(Entity original) => original.Clone();
 
-
+        public static void Destroy<T>(ref T obj) => Rails.Destroy(ref obj);
 		#endregion
 	}
 }

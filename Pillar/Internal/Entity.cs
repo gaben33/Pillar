@@ -56,8 +56,13 @@ namespace Pillar3D {
 			Name = "Game Object";
 			Tag = "untagged";
 			ContainerLevel = Level.CurrentLevel;
-			for (int r = (new Random()).Next(); entityIDs.ContainsKey(r); r = (new Random()).Next()) ID = r;
-			entityIDs.Add(ID, this);
+            Random r = new Random();
+            int iid = r.Next(5000000);
+            while(entityIDs.ContainsKey(iid)) {
+                iid = r.Next(5000000);
+            }
+            ID = iid;
+            entityIDs.Add(ID, this);
 		}
 
 		public Entity(string name) : this() {

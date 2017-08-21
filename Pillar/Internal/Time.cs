@@ -23,9 +23,16 @@ namespace Pillar3D {
 			RealTime = (float)watch.Elapsed.TotalSeconds;
 			ScaledTime += DeltaTime * TimeScale;
 			FrameCount++;
-			while (DTSamples.Count >= SampleCount) DTSamples.Dequeue();
-			DTSamples.Enqueue(DeltaTime);
-			SmoothDeltaTime = DTSamples.Average();
+			if(DTSamples.Count < SampleCount) {
+				DTSamples.Enqueue(DeltaTime);
+				SmoothDeltaTime = DTSamples.Average();
+			} else {
+				float smallSDT = SmoothDeltaTime * SampleCount;
+				smallSDT -= DTSamples.Dequeue();
+				smallSDT += DeltaTime;
+				DTSamples.Enqueue(DeltaTime);
+				SmoothDeltaTime = smallSDT / SampleCount;
+			}
 		}
 
 		public Time() {

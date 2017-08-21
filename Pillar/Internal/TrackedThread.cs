@@ -12,7 +12,6 @@ namespace Pillar3D.Internal {
 		protected internal Thread thread;
 		public TrackedThread(Level level) {
 			Levels.Add(level);
-			Stress += level.Rail.Update.GetInvocationList().Length + level.Rail.PersistantUpdate.GetInvocationList().Length;
 			thread = new Thread(new ThreadStart(level.Rail.Initialize));
 			thread.Start();
 		}
@@ -20,7 +19,6 @@ namespace Pillar3D.Internal {
 		public void AddLevel (Level level) {
 			Levels.Add(level);
 			level.Rail.Initialize?.Invoke();
-			Stress += level.Rail.Update.GetInvocationList().Length + level.Rail.PersistantUpdate.GetInvocationList().Length;
 		}
 
 		public void Frame () {
@@ -31,11 +29,6 @@ namespace Pillar3D.Internal {
 			}
 			thread = new Thread(new ThreadStart(del));
 			thread.Start();
-		}
-
-		//pauses the thread to allow Gameobjects in the queue to filter into the level
-		public void Repopulate () {
-			
 		}
 	}
 }

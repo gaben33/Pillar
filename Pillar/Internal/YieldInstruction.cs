@@ -16,26 +16,30 @@ namespace Pillar3D {
 			Rails.GlobalPersistantUpdate += Frame;
 		}
 
-		~RoutineRunner () {
+		~RoutineRunner() {
 			Rails.GlobalPersistantUpdate -= Frame;
 		}
 
 		//advance one frame
 		public void Frame() {
-			for (int i = 0; i < routines.Count; i++) {
-				YieldInstruction current = routines[i].Current;
+			FrameSubset(routines);
+		}
+
+		public static void FrameSubset(List<IEnumerator<YieldInstruction>> subset) {
+			for (int i = 0; i < subset.Count; i++) {
+				YieldInstruction current = subset[i].Current;
 				if (current == null) {
-					routines[i].MoveNext();
+					subset[i].MoveNext();
 					continue;
 				}
 				Instruction inst = current.GetInstruction();
 				switch (inst) {
 					case (Instruction.exit):
-						routines.RemoveAt(i);
+						subset.RemoveAt(i);
 						break;
 					case (Instruction.resume):
-						if (!routines[i].MoveNext()) {
-							routines.RemoveAt(i);
+						if (!subset[i].MoveNext()) {
+							subset.RemoveAt(i);
 						}
 						break;
 					case (Instruction.wait):
@@ -45,5 +49,6 @@ namespace Pillar3D {
 		}
 
 		public static void RunRoutine(IEnumerator<YieldInstruction> routine) => routines.Add(routine);
+		public static void StopRoutine(IEnumerator<YieldInstruction> routine) => routines.Remove(routine);
 	}
 }

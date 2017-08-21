@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace Pillar3D {
 	public class Vector4 : Vector3 {
-		public float w;
+		public float w { get { return values[3]; } set { values[3] = value; } }
 
 		#region constructors
-		public Vector4() : base() {
-			w = 0;
+		public Vector4() {
+			values = new float[] { 0, 0, 0, 0 };
 		}
-		public Vector4(float x, float y, float z, float w) : base(x,y,z) {
-			this.w = w;
+		public Vector4(float x, float y, float z, float w) {
+			values = new float[] { x, y, z, w };
 		}
-		public Vector4(Vector4 original) : base(original) {
-			w = original.w;
+		public Vector4(Vector4 original) {
+			values = new float[] { original.x, original.y, original.z, original.w };
 		}
-		public Vector4(Vector3 original) : base(original) {
-			w = 0;
+		public Vector4(Vector3 original) {
+			values = new float[] { original.x, original.y, original.z, 0 };
 		}
-		public Vector4(Vector2 original) : base(original) {
-			w = 0;
+		public Vector4(Vector2 original) {
+			values = new float[] { original.x, original.y, 0, 0 };
 		}
 		#endregion
 
@@ -98,17 +98,17 @@ namespace Pillar3D {
 	}
 
 	public class Vector3 : Vector2 {
-		public float z;
+		public float z { get { return values[2]; } set { values[2] = value; } }
 
 		#region constructors
-		public Vector3() : base() {
-			z = 0;
+		public Vector3() {
+			values = new float[] { 0, 0, 0 };
 		}
-		public Vector3(float x, float y, float z) : base(x, y) {
-			this.z = z;
+		public Vector3(float x, float y, float z) {
+			values = new float[] { x, y, z };
 		}
-		public Vector3(Vector3 original) : base(original) {
-			z = original.z;
+		public Vector3(Vector3 original) {
+			values = new float[] { original.x, original.y, original.z };
 		}
 		public Vector3(Vector2 original) : base(original) {
 			z = 0;
@@ -215,19 +215,20 @@ namespace Pillar3D {
 	}
 
 	public class Vector2 {
-		public float x, y;
+		public float x { get { return values[0]; } set { values[0] = value; } }
+		public float y { get { return values[1]; } set { values[1] = value; } }
+
+		protected float[] values;
 
 		#region constructors
 		public Vector2() {
-			x = y = 0;
+			values = new float[] { 0, 0 };
 		}
 		public Vector2(float x, float y) {
-			this.x = x;
-			this.y = y;
+			values = new float[] { x, y };
 		}
 		public Vector2(Vector2 original) {
-			x = original.x;
-			y = original.y;
+			values = original.values;
 		}
 		#endregion
 
@@ -284,8 +285,8 @@ namespace Pillar3D {
 		}
 
 		public float this[int i] {
-			get { return i == 0 ? x : y; }
-			set { if (i == 0) x = value; else y = value; }
+			get { return values[i]; }
+			set { values[i] = value; }
 		}
 
 		public static explicit operator VectorN (Vector2 vec) {
